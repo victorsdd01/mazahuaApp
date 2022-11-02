@@ -9,6 +9,7 @@ void main() {
     providers: [
       BlocProvider(create: (context) => RegistroBloc()),
       BlocProvider(create: (context) => LoginBloc()),
+      BlocProvider(create: (context) => PartidaBloc())
     ], 
     child: const MyApp()
    )
