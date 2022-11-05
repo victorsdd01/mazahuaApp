@@ -82,5 +82,38 @@ class MyAlerts{
       );
     }
 
+    static Future<void>getOutQuiz(BuildContext context)async{
+      await showDialog(
+        barrierDismissible: false,
+        context: context, 
+        builder: (_) =>  AlertDialog(
+          title: const Text('¿Esta seguro que desea salir del quiz? perderá todos sus puntos obtenidos.'),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              MyButtom(
+                textColor: AppThemes.blanco,
+                color: AppThemes.rojo, 
+                text: 'Cancelar', 
+                borderRadius: 10.0, 
+                onClick: () => Navigator.of(context).pop(false)
+              ),
+              const SizedBox(width: 20.0),
+              MyButtom(
+                textColor: AppThemes.blanco,
+                color: AppThemes.verdeOscuro, 
+                text: 'Aceptar', 
+                borderRadius: 10.0, 
+                onClick: ()=> Navigator.of(context).popAndPushNamed('jugar')
+              )
+            ],
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)
+          ),
+        )
+      );
+    }
+
 
 }

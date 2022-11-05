@@ -20,3 +20,18 @@ class OnAddProgressIndicatorEvent extends PartidaEvent {
   final double newValue;
   const OnAddProgressIndicatorEvent(this.newValue);
 }
+
+class OnChangeCurrentQuestionEvent extends PartidaEvent {
+  final int currentQuestion;
+  const OnChangeCurrentQuestionEvent(this.currentQuestion);
+}
+
+class OnQuizCompleteEvent extends PartidaEvent {}
+
+class OnNotQuizCompleteEvent extends PartidaEvent {}
+
+class OnAddPuntosEvent extends PartidaEvent {
+  final int puntosObtenidos;
+  const OnAddPuntosEvent(this.puntosObtenidos);
+
+}

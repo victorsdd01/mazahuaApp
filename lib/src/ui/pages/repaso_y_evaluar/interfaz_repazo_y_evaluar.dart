@@ -8,9 +8,6 @@ class RepasoYevaluar extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final User user =  ModalRoute.of(context)!.settings.arguments as User;
-    //print(' id: ${user.id}');
-    //print(' nombre: ${user.nombre}');
-    //print(' password: ${user.password}');
     return  WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

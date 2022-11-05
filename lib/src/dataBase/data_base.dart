@@ -47,7 +47,7 @@ class MazahuaDataBase{
       try {  
         final dbPath = await getDatabasesPath();
         final path =  join(dbPath,filePath);
-        print(path);
+        //print(path);
         return openDatabase(path,onCreate: _onCreateDB,version: 1);
       } on DatabaseException{
         if (kDebugMode) {
