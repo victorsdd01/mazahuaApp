@@ -2,52 +2,66 @@ part of 'partida_bloc.dart';
 
 class PartidaState extends Equatable {
 
-  final bool isCorrectAnswer;
-  final int selectedItem;
+  
+  final int currentIndex;
   final double progressIndicator;
   final int currentQuestion;
   final bool isQuizComplete;
   final int puntosObtenidos;
+  final int vidas;
+  final int preguntasAcertadas;
+  final int preguntasFallidas;
 
   const PartidaState({
-    this.isCorrectAnswer   = false,
-    this.selectedItem      = -1,
-    this.progressIndicator = 0.1,
-    this.currentQuestion   = 1,
-    this.isQuizComplete    = false,
-    this.puntosObtenidos   = 0,
+    
+    this.currentIndex       = -1,
+    this.progressIndicator  = 0.1,
+    this.currentQuestion    = 1,
+    this.isQuizComplete     = false,
+    this.puntosObtenidos    = 0,
+    this.vidas              = 3,
+    this.preguntasAcertadas = 0,
+    this.preguntasFallidas  = 0
   });
 
   PartidaState copyWith({
 
-    bool? isCorrectAnswer,
-    int? selectedItem,
+    
+    int? currentIndex,
     double? progressIndicator,
     int? currentQuestion,
     bool? isQuizComplete,
-    int? puntosObtenidos
+    int? puntosObtenidos,
+    int? vidas,
+    int? preguntasAcertadas,
+    int? preguntasFallidas,
 
   }) =>
       PartidaState(
 
-          isCorrectAnswer: isCorrectAnswer ?? this.isCorrectAnswer,
-          selectedItem: selectedItem ?? this.selectedItem,
+          
+          currentIndex: currentIndex ?? this.currentIndex,
           progressIndicator: progressIndicator ?? this.progressIndicator,
           currentQuestion: currentQuestion ?? this.currentQuestion,
           isQuizComplete: isQuizComplete ?? this.isQuizComplete,
-          puntosObtenidos: puntosObtenidos ?? this.puntosObtenidos
+          puntosObtenidos: puntosObtenidos ?? this.puntosObtenidos,
+          vidas: vidas ?? this.vidas,
+          preguntasAcertadas: preguntasAcertadas ?? this.preguntasAcertadas,
+          preguntasFallidas: preguntasFallidas ?? this.preguntasFallidas
 
       );
 
   @override
   List<Object> get props => [
 
-     isCorrectAnswer,
-     selectedItem,
+     
+     currentIndex,
      progressIndicator,
      currentQuestion,
      isQuizComplete,
-     puntosObtenidos
+     puntosObtenidos,
+     vidas,preguntasAcertadas,
+     preguntasFallidas
      
   ];
 }

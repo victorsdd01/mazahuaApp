@@ -35,8 +35,11 @@ class MyButtom extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          color: textColor ?? Colors.black87
+          color: textColor ?? Colors.black87,
+          
         ),
+        maxLines: 1,
+        
       ),
     );
   }

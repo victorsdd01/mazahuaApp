@@ -11,9 +11,9 @@ class OnIsCorrectAnswerEvent extends PartidaEvent {}
 
 class OnIsNotCorrectAnswerEvent extends PartidaEvent {}
 
-class OnCurrentItemSelectedEvent extends PartidaEvent {
-  final int selectedItem;
-  const OnCurrentItemSelectedEvent(this.selectedItem);
+class OnAddCurrenteIndex extends PartidaEvent {
+  final int currentIndex;
+  const OnAddCurrenteIndex(this.currentIndex);
 }
 
 class OnAddProgressIndicatorEvent extends PartidaEvent {
@@ -33,5 +33,25 @@ class OnNotQuizCompleteEvent extends PartidaEvent {}
 class OnAddPuntosEvent extends PartidaEvent {
   final int puntosObtenidos;
   const OnAddPuntosEvent(this.puntosObtenidos);
+}
 
+class OnSubtracLifesEvent extends PartidaEvent{
+  final int vidasDisponibles;
+  const OnSubtracLifesEvent(this.vidasDisponibles);
+
+}
+
+class OnAddVidasEvent extends PartidaEvent{
+  final int vidas;
+  const OnAddVidasEvent(this.vidas);
+}
+
+class OnAddPreguntaAcertadaEvent extends PartidaEvent{
+  final int nuevoValor;
+  const OnAddPreguntaAcertadaEvent(this.nuevoValor);
+}
+
+class OnAddPreguntaFalladaEvent extends PartidaEvent{
+  final int nuevoValor;
+  const OnAddPreguntaFalladaEvent(this.nuevoValor);
 }

@@ -9,6 +9,7 @@ class JugarPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    
     final size      = MediaQuery.of(context).size;
     final User user = ModalRoute.of(context)!.settings.arguments as User;
     return  WillPopScope(
@@ -24,7 +25,7 @@ class JugarPage extends StatelessWidget {
             )
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
                 padding: EdgeInsets.only(top:size.height*0.06),
@@ -32,7 +33,7 @@ class JugarPage extends StatelessWidget {
               ),
               SizedBox(
                 width: size.width * 0.40,
-                height: size.height *0.60,
+                height: size.height *0.40,
                 child: FutureBuilder<List<Niveles>>(
                   future: MazahuaDataBase.instance.getNiveles() ,
                   builder: (context, AsyncSnapshot<List<Niveles>> snapshot){
@@ -46,7 +47,11 @@ class JugarPage extends StatelessWidget {
                             color: AppThemes.morado, 
                             text: nivel.nombreNivel, 
                             borderRadius: 10.0, 
-                            onClick: ()=> Navigator.pushNamed(context, 'partidaPage', arguments: nivel),
+                            onClick: ()=> Navigator.pushNamed(context, 'partidaPage',arguments: {
+                                'nivel':nivel,
+                                'user' :user
+                              }
+                            ),
                             textColor: AppThemes.blanco,
                           );
                         },
@@ -57,6 +62,13 @@ class JugarPage extends StatelessWidget {
       
                   }
                 ),
+              ),
+              MyButtom(
+                textColor: AppThemes.blanco,
+                color: AppThemes.morado, 
+                text: 'Regresar', 
+                borderRadius: 10.0, 
+                onClick: ()=> Navigator.of(context).pushNamed('repasoYevaluar',arguments: user)
               )
             ],
           ),

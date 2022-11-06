@@ -7,14 +7,16 @@ part 'partida_state.dart';
 class PartidaBloc extends Bloc<PartidaEvent, PartidaState> {
   PartidaBloc() : super(const PartidaState()) {
 
-    on<OnIsCorrectAnswerEvent>((event, emit) => emit(state.copyWith(isCorrectAnswer: true)));
-    on<OnIsNotCorrectAnswerEvent>((event, emit) => emit(state.copyWith(isCorrectAnswer: false)));
-    on<OnCurrentItemSelectedEvent>((event, emit) => emit(state.copyWith(selectedItem: event.selectedItem)));
+    on<OnAddCurrenteIndex>((event, emit) => emit(state.copyWith(currentIndex: event.currentIndex)));
     on<OnAddProgressIndicatorEvent>((event, emit) => emit(state.copyWith(progressIndicator: event.newValue)));
     on<OnChangeCurrentQuestionEvent>((event, emit) => emit(state.copyWith(currentQuestion: event.currentQuestion)));
     on<OnQuizCompleteEvent>((event, emit) => emit(state.copyWith(isQuizComplete: true)));
     on<OnNotQuizCompleteEvent>((event, emit) => emit(state.copyWith(isQuizComplete: false)));
     on<OnAddPuntosEvent>((event, emit) => emit(state.copyWith(puntosObtenidos: event.puntosObtenidos)));
+    on<OnSubtracLifesEvent>((event, emit) => emit(state.copyWith(vidas: event.vidasDisponibles)));
+    on<OnAddPreguntaAcertadaEvent>((event, emit) => emit(state.copyWith(preguntasAcertadas: event.nuevoValor)));
+    on<OnAddPreguntaFalladaEvent>((event, emit) => emit(state.copyWith(preguntasFallidas: event.nuevoValor)));
+    on<OnAddVidasEvent>((event, emit) => emit(state.copyWith(vidas: event.vidas)));
 
   }
 
@@ -22,8 +24,8 @@ class PartidaBloc extends Bloc<PartidaEvent, PartidaState> {
     add(OnIsCorrectAnswerEvent());
   }
 
-  void currentSelectedItem(int selectedItem) {
-    add(OnCurrentItemSelectedEvent(selectedItem));
+  void addCurrentIndex(int currentIndex) {
+    add(OnAddCurrenteIndex(currentIndex));
   }
 
   void addProgressIndicator(double value) {
@@ -46,5 +48,32 @@ class PartidaBloc extends Bloc<PartidaEvent, PartidaState> {
     add(OnAddPuntosEvent(puntosObtenidos));
   }
 
+
+  void resetearEstados(){
+    // progress indicator
+    // currentQuestion
+    // isQuizCompete
+    // puntos obtenidos
+    add(OnNotQuizCompleteEvent());
+    add(const OnChangeCurrentQuestionEvent(1));
+    add(const OnAddProgressIndicatorEvent(0.1));
+    add(const OnAddPuntosEvent(0));
+    add(const OnAddPreguntaAcertadaEvent(0));
+    add(const OnAddPreguntaFalladaEvent(0));
+    add(const OnAddVidasEvent(3));
+
+  }
+
+  void restarVidas(int vidasDisponibles){
+    add(OnSubtracLifesEvent(vidasDisponibles));
+  }
+
+  void sumarPreguntaAcertada(int nuevoValor){
+    add(OnAddPreguntaAcertadaEvent(nuevoValor));
+  }
+
+  void sumarPreguntaFallida(int nuevoValor){
+    add(OnAddPreguntaFalladaEvent(nuevoValor));
+  }
   
 }

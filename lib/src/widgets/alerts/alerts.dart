@@ -82,7 +82,7 @@ class MyAlerts{
       );
     }
 
-    static Future<void>getOutQuiz(BuildContext context)async{
+    static Future<void>getOutQuiz(BuildContext context, User user)async{
       await showDialog(
         barrierDismissible: false,
         context: context, 
@@ -104,7 +104,83 @@ class MyAlerts{
                 color: AppThemes.verdeOscuro, 
                 text: 'Aceptar', 
                 borderRadius: 10.0, 
-                onClick: ()=> Navigator.of(context).popAndPushNamed('jugar')
+                onClick: () {
+                  final PartidaBloc partidaBloc = BlocProvider.of<PartidaBloc>(context);
+                  partidaBloc.resetearEstados();
+                  return Navigator.of(context).popAndPushNamed('jugar', arguments: user);
+                }
+              )
+            ],
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)
+          ),
+        )
+      );
+    }
+
+
+    static Future<void>finishQuiz(BuildContext context, User user)async{
+      await showDialog(
+        barrierDismissible: false,
+        context: context, 
+        builder: (_) =>  AlertDialog(
+          title: const Text('¿Desea iniciar otra partida de quiz o desea ir al menu de repaso y evaluar?'),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              MyButtom(
+                textColor: AppThemes.blanco,
+                color: AppThemes.rojo, 
+                text: 'Ir a repaso y evaluar', 
+                borderRadius: 10.0, 
+                onClick: () => Navigator.of(context).popAndPushNamed('repasoYevaluar', arguments: user)
+              ),
+              const SizedBox(width: 20.0),
+              MyButtom(
+                textColor: AppThemes.blanco,
+                color: AppThemes.verdeOscuro, 
+                text: 'Otra partida', 
+                borderRadius: 10.0, 
+                onClick: ()=> Navigator.of(context).popAndPushNamed('jugar', arguments: user)
+              )
+            ],
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)
+          ),
+        )
+      );
+    }
+
+
+    static Future<void>sinVidas(BuildContext context, User user)async{
+      await showDialog(
+        barrierDismissible: true,
+        context: context, 
+        builder: (_) =>  AlertDialog(
+          title: const Text('Has perdido todos tus intentos, te recomendamos repasar otra vez, no te preocupes siempre puedes intentarlo!'),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              MyButtom(
+                textColor: AppThemes.blanco,
+                color: AppThemes.rojo, 
+                text: 'Ir a repaso', 
+                borderRadius: 10.0, 
+                onClick: () => Navigator.of(context).popAndPushNamed('repaso')
+              ),
+              const SizedBox(width: 20.0),
+              MyButtom(
+                textColor: AppThemes.blanco,
+                color: AppThemes.verdeOscuro, 
+                text: 'Aceptar', 
+                borderRadius: 10.0, 
+                onClick: () {
+                  final PartidaBloc partidaBloc = BlocProvider.of<PartidaBloc>(context);
+                  partidaBloc.resetearEstados();
+                  return Navigator.of(context).popAndPushNamed('repasoYevaluar', arguments: user);
+                }
               )
             ],
           ),
