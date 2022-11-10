@@ -1,4 +1,5 @@
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazahua/src/dataBase/data_base.dart';
 import 'package:mazahua/src/domain/blocs/blocs.dart';
@@ -25,12 +26,10 @@ class PartidaPage extends StatelessWidget {
           appBar: AppBar(
             actions: [ 
               BlocBuilder<PartidaBloc, PartidaState>(
-                builder: (context, state)  {
+                builder: (context, state){
                   if(nivel.nombreNivel == 'DIFICIL'){
-
-                    if(state.vidas == 0){
-                      WidgetsBinding.instance.addPostFrameCallback((_) async => await MyAlerts.sinVidas(context, user));
-                    }
+                    if(state.vidas == 0 ) WidgetsBinding.instance.addPostFrameCallback((_) async => await MyAlerts.sinVidas(context, user)); 
+                    
                     return state.vidas == 3 ? Row(
                       children: const [
                             Icon(Icons.favorite, color: AppThemes.rojo),
@@ -284,7 +283,9 @@ class PartidaPage extends StatelessWidget {
                                                         );                              
                                                         partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
                                                         if (state.currentQuestion == snapshot.data!.length) {
-                                                          print('🥵Estoy en la ultima pregunta');
+                                                          if (kDebugMode) {
+                                                            print('🥵Estoy en la ultima pregunta');
+                                                          }
                                                           partidaBloc.quizComplete();
                                                         }
                                                       }
@@ -318,7 +319,9 @@ class PartidaPage extends StatelessWidget {
                                                         );
                                                         partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
                                                         if (state.currentQuestion == snapshot.data!.length) {
-                                                          print('🥵Estoy en la ultima pregunta');
+                                                          if (kDebugMode) {
+                                                            print('🥵Estoy en la ultima pregunta');
+                                                          }
                                                           partidaBloc.quizComplete();
                                                         }
                                                       }

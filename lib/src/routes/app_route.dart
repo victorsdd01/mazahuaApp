@@ -20,7 +20,8 @@ class AppRoutes{
     'categoriaRepasoColores'          : (_) =>  const CategoriaRepasoColores(),
     'categoriaRepasoPartesDelCuerpo'  : (_) =>  const CategoriaRepasoPdC(),
     'categoriaRepasoVocabulario'      : (_) =>  const CategoriaRepasoVocabulario(),
-    'partidaPage'                     : (_) =>  const PartidaPage()     
+    'partidaPage'                     : (_) =>  const PartidaPage(),
+    'seleccionarJuego'                : (_) =>  const SeleccionarJuegoPage(),    
   };
 
 

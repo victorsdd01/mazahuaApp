@@ -59,7 +59,7 @@ class RepasoYevaluar extends StatelessWidget {
                   color: AppThemes.morado, 
                   text: 'Jugar', 
                   borderRadius: 10.0,
-                  onClick:() => Navigator.of(context).pushNamed('jugar', arguments: user)
+                  onClick:() => Navigator.of(context).pushNamed('seleccionarJuego', arguments: user)
                 ),
               ],
             ),

@@ -55,3 +55,15 @@ class OnAddPreguntaFalladaEvent extends PartidaEvent{
   final int nuevoValor;
   const OnAddPreguntaFalladaEvent(this.nuevoValor);
 }
+
+
+class OnBackToHomeEvent extends PartidaEvent{}
+class OnNotBackToHomeEvent extends PartidaEvent{}
+
+class OnChangeGridViewEvent extends PartidaEvent{
+  final int newValue;
+  const OnChangeGridViewEvent(this.newValue);
+}
+
+class OnGriViewChangeEvent extends PartidaEvent{}
+class OnGriViewNotChangeEvent extends PartidaEvent{}

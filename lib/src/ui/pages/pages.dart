@@ -1,3 +1,5 @@
+
+
 export 'package:flutter/material.dart';
 export 'package:mazahua/src/ui/pages/home/home_page.dart';
 export 'package:mazahua/src/ui/pages/registrar/registrar.dart';
@@ -12,6 +14,7 @@ export 'package:mazahua/src/ui/pages/categoria_repaso_partes_del_cuerpo/categori
 export 'package:mazahua/src/ui/pages/jugar/jugar.dart';
 export 'package:mazahua/src/ui/pages/categoria_repaso_vocabulario/categoria_repaso_vocabulario.dart';
 export 'package:mazahua/src/ui/pages/partida/partida.dart';
+export 'package:mazahua/src/ui/pages/tipo_de_juego/tipo_de_juego.dart';
 
 // widgets
 export 'package:mazahua/src/widgets/widgets.dart';

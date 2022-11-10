@@ -4,8 +4,6 @@ import 'package:mazahua/src/ui/pages/pages.dart';
 
 class AppThemes{
 
-
-
   static const Color amarillo       = Color(0xffffff02);
   static const Color verde          = Color(0xff00ff02);
   static const Color rosado         = Color(0xffff00fe);
@@ -19,4 +17,6 @@ class AppThemes{
   static const Color azul           = Color(0xff234c6c);
   static const Color quizColor      = Color(0xff262c47);
   static const Color lightQuizColor = Color(0xff3c475e);
+  static const Color skyColor       = Color(0xffc5ecff);
+
 }

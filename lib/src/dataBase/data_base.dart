@@ -24,6 +24,7 @@ class MazahuaDataBase{
   final String tablaNiveles         = "NIVELES"; 
   final String tablaVocabulario     = "VOCABULARIO";
   final String tablaPreguntas       = "PREGUNTAS";
+  final String tablaTipoJuego       = "TIPO_DE_JUEGO";
 
   MazahuaDataBase._init();
 
@@ -180,6 +181,21 @@ class MazahuaDataBase{
         );
       '''
     );
+
+    await db.execute(
+      ''' 
+          CREATE TABLE $tablaTipoJuego (
+            id_tipo_juego INTEGER NOT NULL,
+            nombre_juego VARCHAR (500) NOT NULL,
+            tipo_juego VARCHAR(100) NOT NULL,
+            imagen_juego VARCHAR(1500) NOT NULL,
+            materia_juego  VARCHAR(500) NOT NULL,
+            PRIMARY KEY("id_tipo_juego" AUTOINCREMENT)
+          );
+      '''
+    );
+
+
 
     // INSERTS
     // PREGUNTAS
@@ -440,7 +456,11 @@ class MazahuaDataBase{
     await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'pasto.png','pasto.m4a','phindyo');");
     await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'arbol.png','arbol.m4a','xiza');");
     await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'flor.png','flor.m4a','nrrenzhajna');");
+    // tipos de juegos
 
+    await db.execute("INSERT INTO $tablaTipoJuego VALUES (NULL,'Selecciona la respuesta correcta','Quiz','espanol.png','espanol')");
+    await db.execute("INSERT INTO $tablaTipoJuego VALUES (NULL,'Operaciones matematicas','Quiz','matematicas.png','matematicas')");
+    await db.execute("INSERT INTO $tablaTipoJuego VALUES (NULL,'Aprende de ciencia','Quiz','ciencia.png','ciencias')");
 
 
 
@@ -647,6 +667,21 @@ class MazahuaDataBase{
     } on Exception {
       if (kDebugMode) {
         print('❌Error al obtener las preguntas');
+      }
+      return [];
+    }
+  }
+
+
+  Future<List<TipoJuego>> getTiposDeJuegos()async{
+    final db = await instance.dataBase;
+    try {
+      final List<Map<String,dynamic>> data = await db.query(tablaTipoJuego);
+      final List<TipoJuego> tiposDeJuegos = data.map((juego) => TipoJuego.fromMap(juego)).toList();
+      return tiposDeJuegos;
+    } on Exception{
+      if (kDebugMode) {
+        print('❌ Ocurrio un error al obtener los tipos de juegos...');
       }
       return [];
     }

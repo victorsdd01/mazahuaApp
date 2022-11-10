@@ -17,6 +17,11 @@ class PartidaBloc extends Bloc<PartidaEvent, PartidaState> {
     on<OnAddPreguntaAcertadaEvent>((event, emit) => emit(state.copyWith(preguntasAcertadas: event.nuevoValor)));
     on<OnAddPreguntaFalladaEvent>((event, emit) => emit(state.copyWith(preguntasFallidas: event.nuevoValor)));
     on<OnAddVidasEvent>((event, emit) => emit(state.copyWith(vidas: event.vidas)));
+    on<OnBackToHomeEvent>((event, emit) => emit(state.copyWith(backToHome: true)));
+    on<OnNotBackToHomeEvent>((event, emit) => emit(state.copyWith(backToHome: false)));
+    on<OnChangeGridViewEvent>((event, emit) => emit(state.copyWith(crossAxisCount: event.newValue)));
+    on<OnGriViewChangeEvent>((event, emit) => emit(state.copyWith(changeGridView: true)));
+    on<OnGriViewNotChangeEvent>((event, emit) => emit(state.copyWith(changeGridView: false)));
 
   }
 
@@ -75,5 +80,10 @@ class PartidaBloc extends Bloc<PartidaEvent, PartidaState> {
   void sumarPreguntaFallida(int nuevoValor){
     add(OnAddPreguntaFalladaEvent(nuevoValor));
   }
+
+  void cambiarVistDelGrid(int newValue){
+    add(OnChangeGridViewEvent(newValue));
+  }
+
   
 }
