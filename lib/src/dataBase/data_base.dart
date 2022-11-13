@@ -48,7 +48,7 @@ class MazahuaDataBase{
       try {  
         final dbPath = await getDatabasesPath();
         final path =  join(dbPath,filePath);
-        //print(path);
+        print(path);
         return openDatabase(path,onCreate: _onCreateDB,version: 1);
       } on DatabaseException{
         if (kDebugMode) {
@@ -177,6 +177,10 @@ class MazahuaDataBase{
           respuesta_incorrecta1 VARCHAR(500) NOT NULL,
           respuesta_incorrecta2 VARCHAR(500) NOT NULL,
           respuesta_incorrecta3 VARCHAR(500) NOT NULL,
+          img_pregunta VARCHAR(500)   NOT NULL,
+          audio_pregunta VARCHAR(200) NOT NULL,
+          tipo_pregunta VARCHAR(150)  NOT NULL,
+          categoria_pregunta VARCHAR(300) NOT NULL,
           PRIMARY KEY("id_pregunta" AUTOINCREMENT)
         );
       '''
@@ -199,20 +203,20 @@ class MazahuaDataBase{
 
     // INSERTS
     // PREGUNTAS
-     await db.execute("INSERT INTO PREGUNTAS VALUES (NULL,'¿Cual es el significado de YEJE?','Dos','Araña','Sapo','Corazon');");
-     await db.execute("INSERT INTO PREGUNTAS VALUES (NULL,'¿Cual es el significado de MUZA?','Zapote','Melon','Ojos','Cuchara');");
-     await db.execute("INSERT INTO PREGUNTAS VALUES (NULL,'¿Cual es el significado de SONNAA?','Aguacate','Leon','Brazo','Tres');");
-     await db.execute("INSERT INTO PREGUNTAS VALUES (NULL,'¿Cual es el significado de MBAJA?','Rojo','Negro','Azul','Silla');");
-     await db.execute("INSERT INTO PREGUNTAS VALUES (NULL,'¿Cual es el significado de POXU?','Dos','Labios','Cabeza','Rana');");
-     await db.execute("INSERT INTO PREGUNTAS VALUES (NULL,'¿Cual es el significado de NIDYE?','Dedo de mano','Cuatro','Cebra','Rojo');");
-     await db.execute("INSERT INTO PREGUNTAS VALUES (NULL,'¿Cual es el significado de MADYE?','Brazo','Blanco','Mano','Azul');");
-     await db.execute("INSERT INTO PREGUNTAS VALUES (NULL,'¿Cual es el significado de MEXA?','Mesa','Madera','Libro','Morado');");
+     await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'¿Cual es el significado de YEJE?','Dos','Tres','Ocho','Diez','numeros/dos.png','dos.m4a','normal','numeros');");
+     await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'Selecciona la respuesta correcta de acuerdo a la imagen','Zapote','Melon','Pera','Manzana','fv/zapote.png','zapote.m4a','imagen-normal','fv');");
+     await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'Selecciona la respuesta correcta de acuerdo al sonido','Aguacate','Papa','Zarzamora','Tuna','fv/aguacate.png','aguacate.m4a','audio','fv');");
+     await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'¿Cual de estas es MBAJA','Rojo','Negro','Azul','Rosa','colores/rojo.png','rojo.m4a','normal-imagen','colores');");
+     await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'Seleccione la respuesta correcta','Dedo de mano','Cerebro','Espalda','Cara','pdc/dedo de mano.png','dedo de mano.m4a','normal-audio','pdc');");
+     await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'¿Cual es el significado de Gris?','Gris','Morado','Negro','Cafe','colores/gris.png','gris.m4a','normal-audio','colores');");
+    //  await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'¿Cual es el significado de MADYE?','Brazo','Blanco','Mano','Azul','brazo.png','brazo.m4a');");
+    //  await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'¿Cual es el significado de MEXA?','Mesa','Madera','Libro','Morado','mesa.png','mesa.m4a');");
 
     //NIVELES
 
-    await db.execute("INSERT INTO NIVELES VALUES(NULL,'FACIL');");
-    await db.execute("INSERT INTO NIVELES VALUES(NULL,'MEDIO');");
-    await db.execute("INSERT INTO NIVELES VALUES(NULL,'DIFICIL');");
+    await db.execute("INSERT INTO $tablaNiveles VALUES(NULL,'FACIL');");
+    await db.execute("INSERT INTO $tablaNiveles VALUES(NULL,'MEDIO');");
+    await db.execute("INSERT INTO $tablaNiveles VALUES(NULL,'DIFICIL');");
 
     //------------CATEGORIAS-------
     await db.execute("INSERT INTO $tablaCategoria VALUES (NULL,'Numeros','numeros.png');");

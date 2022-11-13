@@ -81,12 +81,11 @@ class PartidaPage extends StatelessWidget {
             future: MazahuaDataBase.instance.getPreguntas(),
             builder:(BuildContext context, AsyncSnapshot<List<Preguntas>> snapshot) {
               if (snapshot.hasData) {
-                final List<Preguntas> pregu = snapshot.data!;
-                pregu.shuffle();
+                final List<Preguntas> pregu = snapshot.data!..shuffle();
                 return BlocBuilder<PartidaBloc, PartidaState>(
                   builder: (context, state) {
                     if (state.isQuizComplete == true) {
-                      final porcentajeObtenido = state.puntosObtenidos *100 / (snapshot.data!.length * 10) ;
+                      final porcentajeObtenido = state.puntosObtenidos * 100 / (snapshot.data!.length * 10);
                       return  Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -99,10 +98,11 @@ class PartidaPage extends StatelessWidget {
                               ),
                               margin: const EdgeInsets.all(10.0),
                               width: size.width,
-                              height: size.height *0.60,
+                              //TODO El hight varia dependiendo del dispositivo!!!
+                              height: size.height *0.65,
                               child: Column(
                                 children: [
-                                  SizedBox(height: size.height* 0.02,),
+                                  SizedBox(height: size.height* 0.03,),
                                    const Text(
                                     'Felicidades!',
                                     style: TextStyle(
@@ -122,7 +122,7 @@ class PartidaPage extends StatelessWidget {
                                   Text.rich(
                                     TextSpan(
                                       children: [
-                                        const TextSpan(text: 'Obtuviste'),
+                                        const TextSpan(text: 'Obtuviste '),
                                         TextSpan(
                                           text: '${state.puntosObtenidos}',
                                           style:  TextStyle(
@@ -132,18 +132,18 @@ class PartidaPage extends StatelessWidget {
                                                  : null,
                                           )
                                         ),
-                                        const TextSpan(text: 'puntos',)
+                                        const TextSpan(text: ' puntos',)
                                       ]
                                     ),
                                     style: const TextStyle(color: AppThemes.blanco,fontSize: 20),
                                   ),
                                   const SizedBox(height: 20),
                                   Text(
-                                    '$porcentajeObtenido %',
+                                    '${porcentajeObtenido.round()} %',
                                     style: TextStyle(
                                       fontSize: 60,
                                       color: 
-                                      porcentajeObtenido > 80 ? AppThemes.verde 
+                                      porcentajeObtenido   > 80 ? AppThemes.verde 
                                       : porcentajeObtenido > 60 && porcentajeObtenido < 80 ? Colors.amber 
                                       : porcentajeObtenido < 60 ? AppThemes.rojo 
                                       : null,
@@ -164,12 +164,12 @@ class PartidaPage extends StatelessWidget {
                                     TextSpan(
                                       children: [
                                         //buenas
-                                        const TextSpan(text: 'Obtuviste'),
+                                        const TextSpan(text: 'Obtuviste '),
                                         TextSpan(text: '${state.preguntasAcertadas}', style: const TextStyle(color: AppThemes.verde)),
-                                        const TextSpan(text: 'buenas'),
-                                        const TextSpan(text: 'y'),
+                                        const TextSpan(text: ' buenas'),
+                                        const TextSpan(text: 'y '),
                                         TextSpan(text: '${state.preguntasFallidas}' , style: const TextStyle(color: AppThemes.rojo)),
-                                        const TextSpan(text: 'malas')
+                                        const TextSpan(text: ' malas')
 
                                       ]
                                     ),
@@ -214,7 +214,7 @@ class PartidaPage extends StatelessWidget {
                                 color: AppThemes.blanco, fontSize: 15),
                           ),
                           const _MyProgressBar(),
-                          SizedBox(height: size.height * 0.08),
+                          SizedBox(height: size.height * 0.04),
                           Expanded(
                             child: PageView.builder(
                               onPageChanged: (value) => partidaBloc.changeCurrentQuestion(value + 1),                 
@@ -225,146 +225,72 @@ class PartidaPage extends StatelessWidget {
                                 final Preguntas question      = pregu[index];
                                 final List<String> respuestas = question.posiblesRespuestas;
                                 final String respCorrecta     = question.posiblesRespuestas[0];
-                                respuestas.shuffle();
+                                //respuestas.shuffle();
                                 return SizedBox(
-                                  width: size.width * 0.80,
+                                  width: size.width * 0.85,
                                   //height: size.height *0.50,
                                   child: Column(
                                     children: [
                                       Text(
                                         question.pregunta, // pregunta.....
-                                        style: const TextStyle(color: Colors.white, fontSize: 30),
+                                        style: const TextStyle(color: Colors.white, fontSize: 25),
                                         textAlign: TextAlign.center,
+                                      ),
+                                      // TODO Condicionar dependediendo del tamaño del dispositivo!!!
+                                      // TODO Se valida el tipo de pregunta que es, si es normal, no trae imagen
+                                      BlocBuilder<PartidaBloc, PartidaState>(
+                                        builder: (context, state) {
+                                          if(question.tipoDePregunta == 'normal'){
+                                            print('normal');
+                                            return const SizedBox();
+                                          } else if(question.tipoDePregunta == 'imagen-normal'){
+                                             print('imagen-normal');
+                                             return Image.asset(question.getImgPregunta,scale: 1.8,);
+                                          } else if(question.tipoDePregunta == 'audio'){
+                                             return Column(
+                                              children: [
+                                                Image.asset('assets/images/quiz/sound.png', scale: 1.5,),
+                                                const Text('Presiona para escuchar el sonido', style: TextStyle(color: AppThemes.blanco),)
+                                              ],
+                                            );
+                                          }else if(question.tipoDePregunta == 'normal-imagen'){
+                                            print('normal-imagen');
+                                            return const SizedBox();
+                                          }else{
+                                            print('normal-audio');
+                                            return const SizedBox();
+                                          }
+                                        },
                                       ),
                                       SizedBox(height: size.height * 0.05),
                                       Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:BorderRadius.circular(15.0),
-                                          ),
-                                          height: size.height * 0.30,
-                                          width: size.width * 0.80,
-                                          child: ListView.builder(
-                                              physics:const NeverScrollableScrollPhysics(),
-                                              itemCount: 4,
-                                              itemBuilder: (context, index) {
-                                                final selectedItem = state.currentIndex;
-                                                final bool checked = index == selectedItem;
-                                                return GestureDetector(
-                                                    onTap: () {
-                                                      partidaBloc.addCurrentIndex(index);
-                                                      if (respuestas[index] == respCorrecta) {
-                                                        
-                                                        _pageController.nextPage(
-                                                            duration: const Duration(milliseconds:400),
-                                                            curve: Curves.ease
-                                                        ).then((_) {
-                                                            partidaBloc.addCurrentIndex(-1); // se reinicia el indice que esta en el estado cuando hace el next page
-                                                            partidaBloc.sumarPuntosObtenidos(state.puntosObtenidos + 10);
-                                                            partidaBloc.sumarPreguntaAcertada(state.preguntasAcertadas + 1);
-                                                          }
-                                                        );
-                                                        ScaffoldMessenger.of(context)
-                                                            .showSnackBar(
-                                                            SnackBar(
-                                                              behavior:SnackBarBehavior.floating,
-                                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                                                              margin: const EdgeInsets.only(
-                                                                  top: 10.0,
-                                                                  left: 10.0,
-                                                                  right: 10.0,
-                                                                  bottom: 120.0
-                                                              ),
-                                                              animation:const AlwaysStoppedAnimation(10.0),
-                                                              dismissDirection:DismissDirection.horizontal,
-                                                              duration: const Duration(seconds: 2),
-                                                              content: const Text(' +10 puntos'),
-                                                              backgroundColor: AppThemes.verdeOscuro,
-                                                            )
-                                                        );                              
-                                                        partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
-                                                        if (state.currentQuestion == snapshot.data!.length) {
-                                                          if (kDebugMode) {
-                                                            print('🥵Estoy en la ultima pregunta');
-                                                          }
-                                                          partidaBloc.quizComplete();
-                                                        }
-                                                      }
-                                                      if(respuestas[index]!= respCorrecta ){
-                                                        partidaBloc.restarVidas(state.vidas-1);
-                                                        _pageController.nextPage(
-                                                            duration: const Duration(milliseconds:400),
-                                                            curve: Curves.ease
-                                                        ).then((_) {
-                                                            partidaBloc.addCurrentIndex(-1); // se reinicia el indice que esta en el estado cuando hace el next page
-                                                            partidaBloc.sumarPreguntaFallida(state.preguntasFallidas +1);
-                                                          }
-                                                        );
-                                                        ScaffoldMessenger.of(context)
-                                                            .showSnackBar(
-                                                            SnackBar(
-                                                              behavior:SnackBarBehavior.floating,
-                                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                                                              margin: const EdgeInsets.only(
-                                                                  top: 10.0,
-                                                                  left: 10.0,
-                                                                  right: 10.0,
-                                                                  bottom: 120.0
-                                                              ),
-                                                              animation:const AlwaysStoppedAnimation(10.0),
-                                                              dismissDirection:DismissDirection.horizontal,
-                                                              duration: const Duration(seconds: 2),
-                                                              content: const Text(' Incorrecto! :('),
-                                                              backgroundColor: AppThemes.rojo,
-                                                            )
-                                                        );
-                                                        partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
-                                                        if (state.currentQuestion == snapshot.data!.length) {
-                                                          if (kDebugMode) {
-                                                            print('🥵Estoy en la ultima pregunta');
-                                                          }
-                                                          partidaBloc.quizComplete();
-                                                        }
-                                                      }
-                                                    },
-                                                    child: Container(
-                                                      margin:const EdgeInsets.all( 10.0),
-                                                      width: size.width * 0.70,
-                                                      height: size.height * 0.05,
-                                                      decoration: BoxDecoration(
-                                                          color:  checked == true
-                                                                  ? Colors.amber.shade600
-                                                                  : AppThemes.lightQuizColor,
-                                                          borderRadius:BorderRadius.circular(20.0)
-                                                      ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.only(top:15.0),
-                                                        child: Text(
-                                                          respuestas[index],
-                                                          style: const TextStyle(
-                                                              fontSize: 16,
-                                                              color: AppThemes.blanco
-                                                          ),
-                                                          textAlign: TextAlign.center,   
-                                                        ),
-                                                      ),
-                                                    )
-                                                  );
-                                              }
-                                            )
-                                          ),
+                                        decoration: BoxDecoration(
+                                          borderRadius:BorderRadius.circular(15.0),
+                                        ),
+                                        height: size.height * 0.40,
+                                        width: size.width * 0.80,
+                                        child: BlocBuilder<PartidaBloc,PartidaState>(
+                                          builder: (context, state) {
+                                            if(question.tipoDePregunta == 'normal'){
+                                              return  posiblesRespuestas(question, state, partidaBloc, respuestas, respCorrecta, _pageController, snapshot, size);
+                                            }else if(question.tipoDePregunta == 'imagen-normal'){
+                                              return  posiblesRespuestas(question, state, partidaBloc, respuestas, respCorrecta, _pageController, snapshot, size);
+                                            }else if(question.tipoDePregunta == 'audio'){
+                                              return  posiblesRespuestasImagen(question, state, partidaBloc, respuestas, respCorrecta, _pageController, snapshot, size,  );
+                                            }else if(question.tipoDePregunta == 'normal-imagen'){
+                                              return posiblesRespuestasImagen(question, state, partidaBloc, respuestas, respCorrecta, _pageController, snapshot, size, );
+                                            }else{
+                                              return posiblesRespuestasAudio(question, state, partidaBloc, respuestas, respCorrecta, _pageController, snapshot, size);
+                                            }                      
+                                          }
+                                         )
+                                        ),
                                     ],
                                   ),
                                 );
                               },
                             ),
                           ),
-                          MyButtom(
-                              textColor: Colors.white,
-                              color: Colors.green,
-                              text: 'Siguiente',
-                              borderRadius: 10.0,
-                              onClick: () => null),
-                          SizedBox(height: size.height * 0.05 )
                         ],
                       );
                     }
@@ -378,9 +304,360 @@ class PartidaPage extends StatelessWidget {
         ),
     );
   }
-}
 
-class _MyProgressBar extends StatelessWidget {
+ 
+}
+  ListView posiblesRespuestas(Preguntas question, PartidaState state, PartidaBloc partidaBloc, List<String> respuestas, String respCorrecta, PageController _pageController, AsyncSnapshot<List<Preguntas>> snapshot, Size size) {
+    return ListView.builder(
+       physics:const NeverScrollableScrollPhysics(),
+       itemCount: question.posiblesRespuestas.length,
+       itemBuilder: (context, index) {
+         final selectedItem = state.currentIndex;
+         final bool checked = index == selectedItem;
+         return GestureDetector(
+             onTap: () {
+               partidaBloc.addCurrentIndex(index);
+               if (respuestas[index] == respCorrecta) {
+                 _pageController.nextPage(
+                     duration: const Duration(milliseconds:400),
+                     curve: Curves.ease
+                 ).then((_) {
+                     partidaBloc.addCurrentIndex(-1); // se reinicia el indice que esta en el estado cuando hace el next page
+                     partidaBloc.sumarPuntosObtenidos(state.puntosObtenidos + 10);
+                     partidaBloc.sumarPreguntaAcertada(state.preguntasAcertadas + 1);
+                   }
+                 );
+                 ScaffoldMessenger.of(context)
+                     .showSnackBar(
+                     SnackBar(
+                       behavior:SnackBarBehavior.floating,
+                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                       margin: const EdgeInsets.only(
+                           top: 10.0,
+                           left: 10.0,
+                           right: 10.0,
+                           bottom: 120.0
+                       ),
+                       animation:const AlwaysStoppedAnimation(10.0),
+                       dismissDirection:DismissDirection.horizontal,
+                       duration: const Duration(seconds: 2),
+                       content: const Text(' +10 puntos'),
+                       backgroundColor: AppThemes.verdeOscuro,
+                     )
+                 );                              
+                 partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
+                 if (state.currentQuestion == snapshot.data!.length) {
+                   if (kDebugMode) {
+                     print('🥵Estoy en la ultima pregunta');
+                   }
+                   partidaBloc.quizComplete();
+                 }
+               }
+               if(respuestas[index]!= respCorrecta ){
+                 partidaBloc.restarVidas(state.vidas-1);
+                 _pageController.nextPage(
+                     duration: const Duration(milliseconds:400),
+                     curve: Curves.ease
+                 ).then((_) {
+                     partidaBloc.addCurrentIndex(-1); // se reinicia el indice que esta en el estado cuando hace el next page
+                     partidaBloc.sumarPreguntaFallida(state.preguntasFallidas +1);
+                   }
+                 );
+                 ScaffoldMessenger.of(context)
+                     .showSnackBar(
+                     SnackBar(
+                       behavior:SnackBarBehavior.floating,
+                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                       margin: const EdgeInsets.only(
+                           top: 10.0,
+                           left: 10.0,
+                           right: 10.0,
+                           bottom: 120.0
+                       ),
+                       animation:const AlwaysStoppedAnimation(10.0),
+                       dismissDirection:DismissDirection.horizontal,
+                       duration: const Duration(seconds: 2),
+                       content: const Text(' Incorrecto! :('),
+                       backgroundColor: AppThemes.rojo,
+                     )
+                 );
+                 partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
+                 if (state.currentQuestion == snapshot.data!.length) {
+                   if (kDebugMode) {
+                     print('🥵Estoy en la ultima pregunta');
+                   }
+                   partidaBloc.quizComplete();
+                 }
+               }
+             },
+             child: Container(
+               margin:const EdgeInsets.all( 10.0),
+               width: size.width * 0.70,
+               height: size.height * 0.05,
+               decoration: BoxDecoration(
+                   color:  checked == true
+                           ? Colors.amber.shade600
+                           : AppThemes.lightQuizColor,
+                   borderRadius:BorderRadius.circular(20.0)
+               ),
+               child: Padding(
+                 padding: const EdgeInsets.only(top:15.0),
+                 child: Text(
+                   respuestas[index],
+                   style: const TextStyle(
+                       fontSize: 16,
+                       color: AppThemes.blanco
+                   ),
+                   textAlign: TextAlign.center,   
+                 ),
+               ),
+             )
+           );
+     }
+    );
+  }
+
+  GridView posiblesRespuestasImagen(Preguntas question, PartidaState state, PartidaBloc partidaBloc, List<String> respuestas, String respCorrecta, PageController _pageController, AsyncSnapshot<List<Preguntas>> snapshot, Size size, ) {
+    
+    return GridView.builder(
+       physics:const NeverScrollableScrollPhysics(),
+       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+       itemCount: respuestas.length,
+       itemBuilder: (context, index) {
+         final selectedItem = state.currentIndex;
+         final bool checked = index == selectedItem;
+         return GestureDetector(
+             onTap: () {
+               partidaBloc.addCurrentIndex(index);
+               if (question.posiblesRespuestas[index] == question.respCorrecta) {
+                 _pageController.nextPage(
+                     duration: const Duration(milliseconds:400),
+                     curve: Curves.ease
+                 ).then((_) {
+                     partidaBloc.addCurrentIndex(-1); // se reinicia el indice que esta en el estado cuando hace el next page
+                     partidaBloc.sumarPuntosObtenidos(state.puntosObtenidos + 10);
+                     partidaBloc.sumarPreguntaAcertada(state.preguntasAcertadas + 1);
+                   }
+                 );
+                 ScaffoldMessenger.of(context)
+                     .showSnackBar(
+                     SnackBar(
+                       behavior:SnackBarBehavior.floating,
+                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                       margin: const EdgeInsets.only(
+                           top: 10.0,
+                           left: 10.0,
+                           right: 10.0,
+                           bottom: 120.0
+                       ),
+                       animation:const AlwaysStoppedAnimation(10.0),
+                       dismissDirection:DismissDirection.horizontal,
+                       duration: const Duration(seconds: 2),
+                       content: const Text(' +10 puntos'),
+                       backgroundColor: AppThemes.verdeOscuro,
+                     )
+                 );                              
+                 partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
+                 if (state.currentQuestion == snapshot.data!.length) {
+                   if (kDebugMode) {
+                     print('🥵Estoy en la ultima pregunta');
+                   }
+                   partidaBloc.quizComplete();
+                 }
+               }
+               if(question.posiblesRespuestas[index]!= question.respCorrecta ){
+                 partidaBloc.restarVidas(state.vidas-1);
+                 _pageController.nextPage(
+                     duration: const Duration(milliseconds:400),
+                     curve: Curves.ease
+                 ).then((_) {
+                     partidaBloc.addCurrentIndex(-1); // se reinicia el indice que esta en el estado cuando hace el next page
+                     partidaBloc.sumarPreguntaFallida(state.preguntasFallidas +1);
+                   }
+                 );
+                 ScaffoldMessenger.of(context)
+                     .showSnackBar(
+                     SnackBar(
+                       behavior:SnackBarBehavior.floating,
+                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                       margin: const EdgeInsets.only(
+                           top: 10.0,
+                           left: 10.0,
+                           right: 10.0,
+                           bottom: 120.0
+                       ),
+                       animation:const AlwaysStoppedAnimation(10.0),
+                       dismissDirection:DismissDirection.horizontal,
+                       duration: const Duration(seconds: 2),
+                       content: const Text(' Incorrecto! :('),
+                       backgroundColor: AppThemes.rojo,
+                     )
+                 );
+                 partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
+                 if (state.currentQuestion == snapshot.data!.length) {
+                   if (kDebugMode) {
+                     print('🥵Estoy en la ultima pregunta');
+                   }
+                   partidaBloc.quizComplete();
+                 }
+               }
+             },
+             child: Container(
+               margin:const EdgeInsets.all( 10.0),
+               width: size.width * 0.70,
+               height: size.height * 0.15,
+               decoration: BoxDecoration(
+                   color:  checked == true
+                           ? Colors.amber.shade600
+                           : AppThemes.lightQuizColor,
+                   borderRadius:BorderRadius.circular(20.0)
+               ),
+               child: Padding(
+                 padding: const EdgeInsets.only(top:15.0),
+                 child: Column(
+                   children: [
+                     Image.asset('assets/images/${question.categoriaPregunta}/${question.posiblesRespuestas[index]}', scale: 1.8,),
+                     Text(
+                       question.posiblesRespuestas[index],
+                       style: const TextStyle(
+                           fontSize: 16,
+                           color: AppThemes.blanco
+                       ),
+                       textAlign: TextAlign.center,   
+                     ),
+                   ],
+                 ),
+               ),
+             )
+           );
+        }, 
+    );
+  }
+
+  GridView posiblesRespuestasAudio(Preguntas question, PartidaState state, PartidaBloc partidaBloc, List<String> respuestas, String respCorrecta, PageController _pageController, AsyncSnapshot<List<Preguntas>> snapshot, Size size) {
+    return GridView.builder(
+       physics:const NeverScrollableScrollPhysics(),
+       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+       itemCount: question.posiblesRespuestas.length,
+       itemBuilder: (context, index) {
+         final selectedItem = state.currentIndex;
+         final bool checked = index == selectedItem;
+         return GestureDetector(
+             onTap: () async{
+               partidaBloc.addCurrentIndex(index);
+               //TODO Se debe implementar una logica para que cuando 
+                Soundpool pool = Soundpool(streamType: StreamType.notification);
+                int soundId = await rootBundle.load('assets/audios/audios_${question.categoriaPregunta}/${respuestas[index]}').then((ByteData soundData) {
+                  return pool.load(soundData);
+                });
+                await pool.play(soundId);
+            //    if (respuestas[index] == respCorrecta) {
+            //      _pageController.nextPage(
+            //          duration: const Duration(milliseconds:400),
+            //          curve: Curves.ease
+            //      ).then((_) {
+            //          partidaBloc.addCurrentIndex(-1); // se reinicia el indice que esta en el estado cuando hace el next page
+            //          partidaBloc.sumarPuntosObtenidos(state.puntosObtenidos + 10);
+            //          partidaBloc.sumarPreguntaAcertada(state.preguntasAcertadas + 1);
+            //        }
+            //      );
+            //      ScaffoldMessenger.of(context)
+            //          .showSnackBar(
+            //          SnackBar(
+            //            behavior:SnackBarBehavior.floating,
+            //            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            //            margin: const EdgeInsets.only(
+            //                top: 10.0,
+            //                left: 10.0,
+            //                right: 10.0,
+            //                bottom: 120.0
+            //            ),
+            //            animation:const AlwaysStoppedAnimation(10.0),
+            //            dismissDirection:DismissDirection.horizontal,
+            //            duration: const Duration(seconds: 2),
+            //            content: const Text(' +10 puntos'),
+            //            backgroundColor: AppThemes.verdeOscuro,
+            //          )
+            //      );                              
+            //      partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
+            //      if (state.currentQuestion == snapshot.data!.length) {
+            //        if (kDebugMode) {
+            //          print('🥵Estoy en la ultima pregunta');
+            //        }
+            //        partidaBloc.quizComplete();
+            //      }
+            //    }
+            //    if(respuestas[index]!= respCorrecta ){
+            //      partidaBloc.restarVidas(state.vidas-1);
+            //      _pageController.nextPage(
+            //          duration: const Duration(milliseconds:400),
+            //          curve: Curves.ease
+            //      ).then((_) {
+            //          partidaBloc.addCurrentIndex(-1); // se reinicia el indice que esta en el estado cuando hace el next page
+            //          partidaBloc.sumarPreguntaFallida(state.preguntasFallidas +1);
+            //        }
+            //      );
+            //      ScaffoldMessenger.of(context)
+            //          .showSnackBar(
+            //          SnackBar(
+            //            behavior:SnackBarBehavior.floating,
+            //            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            //            margin: const EdgeInsets.only(
+            //                top: 10.0,
+            //                left: 10.0,
+            //                right: 10.0,
+            //                bottom: 120.0
+            //            ),
+            //            animation:const AlwaysStoppedAnimation(10.0),
+            //            dismissDirection:DismissDirection.horizontal,
+            //            duration: const Duration(seconds: 2),
+            //            content: const Text(' Incorrecto! :('),
+            //            backgroundColor: AppThemes.rojo,
+            //          )
+            //      );
+            //      partidaBloc.addProgressIndicator(state.progressIndicator + 0.1);
+            //      if (state.currentQuestion == snapshot.data!.length) {
+            //        if (kDebugMode) {
+            //          print('🥵Estoy en la ultima pregunta');
+            //        }
+            //        partidaBloc.quizComplete();
+            //      }
+            //    }
+
+            },
+             child: Container(
+               margin:const EdgeInsets.all( 10.0),
+               width: size.width * 0.70,
+               height: size.height * 0.15,
+               decoration: BoxDecoration(
+                   color:  checked == true
+                           ? Colors.amber.shade600
+                           : AppThemes.lightQuizColor,
+                   borderRadius:BorderRadius.circular(20.0)
+               ),
+               child: Padding(
+                 padding: const EdgeInsets.only(top:15.0),
+                 child: Column(
+                   children: [
+                     Image.asset('assets/images/quiz/sound.png'),
+                     Text(
+                       respuestas[index],
+                       style: const TextStyle(
+                           fontSize: 16,
+                           color: AppThemes.blanco
+                       ),
+                       textAlign: TextAlign.center,   
+                     ),
+                   ],
+                 ),
+               ),
+             )
+           );
+        }, 
+    );
+  }
+
+  class _MyProgressBar extends StatelessWidget {
   const _MyProgressBar({
     Key? key,
   }) : super(key: key);

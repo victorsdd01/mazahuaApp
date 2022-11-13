@@ -1,7 +1,5 @@
 
 
-
-
 import 'package:mazahua/src/ui/pages/pages.dart';
 
 class TipoJuego{
@@ -35,13 +33,13 @@ class TipoJuego{
 
   Color get getColor{
     
-    if(materia == 'espanol' ){
+    if(materia == 'espanol'){
       return const Color.fromARGB(255, 252, 224, 138);
     }
-    if(materia == 'matematicas' ){
+    if(materia == 'matematicas'){
       return const Color.fromARGB(255, 163, 252, 179);
     }
-    if(materia == 'ciencias' ){
+    if(materia == 'ciencias'){
       return const Color.fromARGB(255, 150, 207, 252);
     }
     
@@ -49,4 +47,10 @@ class TipoJuego{
   }
 
 
+}
+
+enum Materias{
+  espanol,
+  matematicas,
+  ciencias
 }
