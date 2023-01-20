@@ -46,6 +46,12 @@ class SeleccionarJuegoPage extends StatelessWidget {
                               case 'espanol':
                                 Navigator.pushNamed(context, 'jugar', arguments: user);
                                 break;
+                              case 'matematicas':
+                                Navigator.pushNamed(context, 'juegoMatematicas', arguments: user);
+                                break;
+                              case 'ciencias':
+                                Navigator.pushNamed(context, 'juegoCiencias', arguments: user);
+                                break;
                               default:
                             }
                           },
@@ -58,7 +64,7 @@ class SeleccionarJuegoPage extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.asset(juegos.getIcon, fit: BoxFit.cover, height: size.height*0.15,),
+                                Image.asset(juegos.getIcon, fit: BoxFit.cover, height: size.height*0.12,),
                                 Text(juegos.nombreJuego, textAlign: TextAlign.center,),
                               ],
                             ),
