@@ -8,6 +8,7 @@ class AppRoutes{
   static const String  initialRoute = "home";
 
   static Map<String,Widget Function(BuildContext)> routes = {
+    
     'home'                            : (_) =>  const HomePage(),
     'registrar'                       : (_) =>  const Registrar(),
     'login'                           : (_) =>  const LoginPage(),
@@ -21,7 +22,11 @@ class AppRoutes{
     'categoriaRepasoPartesDelCuerpo'  : (_) =>  const CategoriaRepasoPdC(),
     'categoriaRepasoVocabulario'      : (_) =>  const CategoriaRepasoVocabulario(),
     'partidaPage'                     : (_) =>  const PartidaPage(),
-    'seleccionarJuego'                : (_) =>  const SeleccionarJuegoPage(),    
+    'seleccionarJuego'                : (_) =>  const SeleccionarJuegoPage(),
+    'juegoMatematicas'                : (_) =>  const JuegoMatematicas(),
+    'juegoCiencias'                   : (_) =>  const JuegoCienciasPage(),
+    'dragabble'                       : (_) =>  const DragabblePage()
+
   };
 
 
