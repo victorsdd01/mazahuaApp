@@ -57,6 +57,7 @@ flutter:
     - assets/backgrounds/register_background/
     - assets/backgrounds/login_background/
     - assets/backgrounds/repaso_y_evaluar_background/
+    - assets/backgrounds/juego_ciencias/
     - assets/icons/
     - assets/audios/audios_animales/
     - assets/audios/audios_numeros/
