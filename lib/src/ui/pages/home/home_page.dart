@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:mazahua/src/dataBase/data_base.dart';
 import 'package:mazahua/src/ui/pages/pages.dart';
 
@@ -8,6 +9,7 @@ class HomePage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    
     MazahuaDataBase.instance.dataBase;
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -57,8 +59,17 @@ void onRegistrar(BuildContext context) => Navigator.of(context).pushNamed('regis
 
 void onEntrar(BuildContext context) => Navigator.of(context).pushNamed('login');
 
-void onSalir(BuildContext context){
-
+ Future<void> onSalir(BuildContext context) async {
+  final  currentPlatform =  Platform.operatingSystem.toUpperCase();
+  switch (currentPlatform) {
+    case 'ANDROID':
+      await MyAlerts.exitApp(context);
+      break;
+    case 'IOS':
+      await MyAlerts.exitIOSApp(context,currentPlatform);
+      break;
+    default:
+  }
 }
 
 
