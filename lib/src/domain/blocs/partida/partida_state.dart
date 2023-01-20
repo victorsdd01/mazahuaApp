@@ -14,6 +14,7 @@ class PartidaState extends Equatable {
   final bool backToHome;
   final int crossAxisCount;
   final bool changeGridView;
+  final bool isTypeAudio;
 
   const PartidaState({
     
@@ -27,7 +28,8 @@ class PartidaState extends Equatable {
     this.preguntasFallidas  = 0,
     this.backToHome         = false,
     this.crossAxisCount     = 2,
-    this.changeGridView     = false
+    this.changeGridView     = false,
+    this.isTypeAudio        = false
   });
 
   PartidaState copyWith({
@@ -44,6 +46,7 @@ class PartidaState extends Equatable {
     bool? backToHome,
     int? crossAxisCount,
     bool? changeGridView,
+    bool? isTypeAudio,
 
   }) =>
       PartidaState(
@@ -59,7 +62,8 @@ class PartidaState extends Equatable {
           preguntasFallidas: preguntasFallidas ?? this.preguntasFallidas,
           backToHome: backToHome ?? this.backToHome,
           crossAxisCount: crossAxisCount ?? this.crossAxisCount,
-          changeGridView: changeGridView ?? this.changeGridView
+          changeGridView: changeGridView ?? this.changeGridView,
+          isTypeAudio: isTypeAudio ?? this.isTypeAudio
 
       );
 
@@ -76,7 +80,8 @@ class PartidaState extends Equatable {
      preguntasFallidas,
      backToHome,
      crossAxisCount,
-     changeGridView
+     changeGridView,
+     isTypeAudio
      
   ];
 }

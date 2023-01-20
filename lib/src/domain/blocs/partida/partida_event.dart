@@ -67,3 +67,6 @@ class OnChangeGridViewEvent extends PartidaEvent{
 
 class OnGriViewChangeEvent extends PartidaEvent{}
 class OnGriViewNotChangeEvent extends PartidaEvent{}
+
+class OnIsTypeAudioEvent extends PartidaEvent{}
+class OnIsNotTypeAudioEvent extends PartidaEvent{}

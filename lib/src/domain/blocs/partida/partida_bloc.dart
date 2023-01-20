@@ -22,6 +22,8 @@ class PartidaBloc extends Bloc<PartidaEvent, PartidaState> {
     on<OnChangeGridViewEvent>((event, emit) => emit(state.copyWith(crossAxisCount: event.newValue)));
     on<OnGriViewChangeEvent>((event, emit) => emit(state.copyWith(changeGridView: true)));
     on<OnGriViewNotChangeEvent>((event, emit) => emit(state.copyWith(changeGridView: false)));
+    on<OnIsTypeAudioEvent>((event, emit) => emit(state.copyWith(isTypeAudio: true)));
+    on<OnIsNotTypeAudioEvent>((event, emit) => emit(state.copyWith(isTypeAudio: false)));
 
   }
 
@@ -85,5 +87,11 @@ class PartidaBloc extends Bloc<PartidaEvent, PartidaState> {
     add(OnChangeGridViewEvent(newValue));
   }
 
+  void isTyperAudio(){
+    add(OnIsTypeAudioEvent());
+  }
+  void isNotTyperAudio(){
+    add(OnIsNotTypeAudioEvent());
+  }
   
 }
