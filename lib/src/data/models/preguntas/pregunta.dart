@@ -43,9 +43,14 @@ class Preguntas{
 
   String get getImgPregunta => 'assets/images/$imgPregunta';
   
-  String get respuestaCorrecta{
-    return respCorrecta;
-  }
+  // resp correcta agregando.png y en minuscula
+   String get respuestaCorrecta{
+     return respCorrecta.toLowerCase()+'.png';
+   }
+
+   String get respuestaCorrectaAudio{
+     return 'assets/audios/audios_$categoriaPregunta/$audioPregunta';
+   }
 
    List<String> get posiblesRespuestas{
 
