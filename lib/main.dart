@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'src/domain/blocs/blocs.dart';
@@ -9,7 +10,8 @@ void main() {
     providers: [
       BlocProvider(create: (context) => RegistroBloc()),
       BlocProvider(create: (context) => LoginBloc()),
-      BlocProvider(create: (context) => PartidaBloc())
+      BlocProvider(create: (context) => PartidaBloc()),
+      BlocProvider(create: (context) => JuegoMatematicaBloc()),
     ], 
     child: const MyApp()
    )

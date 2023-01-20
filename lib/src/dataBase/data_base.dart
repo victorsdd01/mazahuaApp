@@ -10,7 +10,6 @@ import 'package:path/path.dart';
 class MazahuaDataBase{
 
   static final MazahuaDataBase instance =  MazahuaDataBase._init();
-  
   static Database? _database;
 
   //Tables
@@ -25,6 +24,7 @@ class MazahuaDataBase{
   final String tablaVocabulario     = "VOCABULARIO";
   final String tablaPreguntas       = "PREGUNTAS";
   final String tablaTipoJuego       = "TIPO_DE_JUEGO";
+  final String tablaJuegoMatematica = "JUEGO_MATEMATICAS";
 
   MazahuaDataBase._init();
 
@@ -200,8 +200,34 @@ class MazahuaDataBase{
     );
 
 
+    await db.execute(
+      '''
+        CREATE TABLE $tablaJuegoMatematica (
+          id_juegoMat INTEGER NOT NULL,
+          tipo_juego VARCHAR(200) NOT NULL,
+          tipo_de_operacion VARCHAR(150) NOT NULL,
+          valor_1 VARCHAR(50) NOT NULL,
+          valor_2 VARCHAR(50) NOT NULL, 
+          resp_correcta VARCHAR(500) NOT NULL,
+          resp_incorrecta VARCHAR(500) NOT NULL,
+          PRIMARY KEY("id_juegoMat" AUTOINCREMENT)
+        );
+      '''
+    );
+
+
 
     // INSERTS
+
+    //JUEGO DE MATEMATICAS
+
+    await db.execute("INSERT INTO $tablaJuegoMatematica VALUES(NULL,'seleccionar','suma','5','5','diez','dos');");
+    await db.execute("INSERT INTO $tablaJuegoMatematica VALUES(NULL,'seleccionar','resta','5','4','uno','nueve');");
+    await db.execute("INSERT INTO $tablaJuegoMatematica VALUES(NULL,'seleccionar','multiplicacion','2','3','seis','uno');");
+    await db.execute("INSERT INTO $tablaJuegoMatematica VALUES(NULL,'seleccionar','division','10','2','cinco','uno');");
+
+
+
     // PREGUNTAS
      await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'¿Cual es el significado de YEJE?','Dos','Tres','Ocho','Diez','numeros/dos.png','dos.m4a','normal','numeros');");
      await db.execute("INSERT INTO $tablaPreguntas VALUES (NULL,'Selecciona la respuesta correcta de acuerdo a la imagen','Zapote','Melon','Pera','Manzana','fv/zapote.png','zapote.m4a','imagen-normal','fv');");
@@ -687,6 +713,19 @@ class MazahuaDataBase{
       if (kDebugMode) {
         print('❌ Ocurrio un error al obtener los tipos de juegos...');
       }
+      return [];
+    }
+  }
+
+
+  Future<List<OperacionesMatematicas>> getOperacionesMatematicas()async{
+    final db = await instance.dataBase;
+    try {
+      final List<Map<String,dynamic>> data = await db.query(tablaJuegoMatematica);
+      final List<OperacionesMatematicas> operacionesMatematicas = data.map((operacion) => OperacionesMatematicas.fromMap(operacion)).toList();
+      return operacionesMatematicas;
+    } on Exception {
+      print('❌ Error al obtener las operaciones matematicas');
       return [];
     }
   }
