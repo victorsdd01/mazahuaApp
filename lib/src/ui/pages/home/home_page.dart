@@ -21,18 +21,29 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //verticalDirection: VerticalDirection.down,
             children: <Widget>[
                Padding(
                 padding:  EdgeInsets.only(top:size.height*0.05),
-                child:  const Text('App Mazahua', 
-                  style: TextStyle(
-                    fontSize: 40,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                    fontStyle: FontStyle.italic
-                  ),
-                 ),
+                child:  Column(
+                  children: const [
+                    Text('App Mazahua', 
+                      style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w300,
+                        fontStyle: FontStyle.italic
+                      ),
+                     ),
+                    Text('ra xorù angezeji', 
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: AppThemes.subTitle,
+                        fontWeight: FontWeight.w300,
+                        fontStyle: FontStyle.italic
+                      ),
+                     ),
+                  ],
+                ),
               ),
               Image.asset(
                 'assets/icons/mazahua.png',
