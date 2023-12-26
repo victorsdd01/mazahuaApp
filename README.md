@@ -1,16 +1,56 @@
-# mazahua
+# mazahua app
 
-A new Flutter project.
+This is my first freelance flutter project, it's a quiz app where you can log in and play one of the different quiz games this app it's for teaching kids different colors, animals, fruits, and more in an indigenous language called "Mazahua".
 
-## Getting Started
+There were four kinds of questions in the game and they can include sounds, images, etc... The dynamics of the game are these: choose the better option, choose the better option when you click the correct sound, and choose the correct answers by clicking the image.
 
-This project is a starting point for a Flutter application.
+Some features have bugs because the client didn't want to pay me, so I've never completed the app.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Technologies used for the project:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter framework
+- SQLite for the database
+- Bloc pattern for state management
+
+
+
+PD: This is not a commercial app...
+
+
+videos for the demostration of the mazahua app.
+
+Part 1
+
+https://github.com/victorsdd01/mazahuaApp/assets/61807238/97b14c57-e2dd-412d-a776-e9dac6de100a
+
+part 2
+
+https://github.com/victorsdd01/mazahuaApp/assets/61807238/0c5acc6e-5a3c-4aee-8914-aafbde1f106c
+
+part 3
+
+https://github.com/victorsdd01/mazahuaApp/assets/61807238/1b49d17a-8463-435e-8c26-43456c74c04c
+
+part 4
+
+https://github.com/victorsdd01/mazahuaApp/assets/61807238/38c045b0-a9fa-437c-a18c-0acf1eeff37d
+
+part 5
+
+https://github.com/victorsdd01/mazahuaApp/assets/61807238/6a2f321a-c3dc-420a-ad4e-677b627d2b61
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
