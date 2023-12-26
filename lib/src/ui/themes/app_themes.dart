@@ -18,5 +18,6 @@ class AppThemes{
   static const Color quizColor      = Color(0xff262c47);
   static const Color lightQuizColor = Color(0xff3c475e);
   static const Color skyColor       = Color(0xffc5ecff);
+  static const Color subTitle       = Color(0xff19f0cd);
 
 }

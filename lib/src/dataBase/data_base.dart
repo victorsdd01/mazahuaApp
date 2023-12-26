@@ -482,7 +482,7 @@ class MazahuaDataBase{
     await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'granizo.png','granizo.m4a','ngunrrojo');");
     await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'lluvia.png','lluvia.m4a','dyebe');");
     await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'trigo.png','trigo.m4a','nzhexu');");
-    await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'estrella.png','estrella.m4a','');");
+    await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'estrella.png','estrella.m4a','seeje');");
     await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'pasto.png','pasto.m4a','phindyo');");
     await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'arbol.png','arbol.m4a','xiza');");
     await db.execute("INSERT INTO $tablaVocabulario VALUES(NULL,'flor.png','flor.m4a','nrrenzhajna');");
